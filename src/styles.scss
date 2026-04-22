@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use 'tailwindcss' as *;
+@use "primeicons/primeicons.css" as *;
+
+
+.p-listbox .p-listbox-list .p-listbox-option.p-listbox-option-selected {
+    background: #FFD0CE !important;
+    color: #8C231C !important;
+}
+
+.p-select-option.p-select-option-selected.p-focus {
+    background: #FFD0CE !important;
+    color: #8C231C !important;
+}
+
+.p-select-option.p-select-option-selected {
+    background: #FFD0CE !important;
+    color: #8C231C !important;
+}
+
+.p-select {
+    font-size: large;
+    font-weight: bold;
+    color: #8C231C;
+}
+
+.p-listbox {
+    display: block;
+    background: transparent !important;
+    color: white !important;
+    border: 1px solid var(--p-listbox-border-color);
+    border-radius: var(--p-listbox-border-radius);
+    transition: background var(--p-listbox-transition-duration), color var(--p-listbox-transition-duration), border-color var(--p-listbox-transition-duration), box-shadow var(--p-listbox-transition-duration), outline-color var(--p-listbox-transition-duration);
+    outline-color: transparent;
+    box-shadow: var(--p-listbox-shadow);
+}
+
+.p-listbox-option {
+    color: white !important;
+}
+
+.p-listbox:not(.p-disabled) .p-listbox-option:not(.p-listbox-option-selected):not(.p-disabled):hover {
+    color:  var(--color-red-800) !important;
+}

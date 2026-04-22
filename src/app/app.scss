@@ -1,0 +1,22 @@
+.toggle-on {
+    color: #008330 !important; /* green for ON */
+    border: 4px solid #008330 !important; /* green border for ON */
+}
+.toggle-off {
+    color: #dc2626 !important; /* red for OFF */
+    border: 4px solid #dc2626 !important; /* red border for OFF */
+}
+.content-panel {
+    background: url("../assets/background.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.tpimage {
+    min-width: 20rem !important; /* 256px */
+    height: 28rem !important; /* 256px */
+}
+
+.grid-ffd {
+    display: grid;
+    grid-template-columns: 6fr, 1fr;
+}
