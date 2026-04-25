@@ -43,3 +43,23 @@
 .p-listbox:not(.p-disabled) .p-listbox-option:not(.p-listbox-option-selected):not(.p-disabled):hover {
     color:  var(--color-red-800) !important;
 }
+
+.p-togglebutton.p-togglebutton-checked {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--p-togglebutton-checked-color);
+}
+
+.p-togglebutton:not(:disabled):not(.p-togglebutton-checked){
+    background: transparent !important;
+    border-color: transparent !important;
+    color: white !important;
+}
+
+.p-select-label {
+    color: var(--color-red-600) !important;
+}
+
+.p-select-label.p-placeholder {
+    color: var(--p-select-placeholder-color) !important;
+}
