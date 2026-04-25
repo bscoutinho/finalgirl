@@ -53,7 +53,7 @@ export class App {
   canTakeClimb: boolean = false;
   canTakeLeap: boolean = false;
   canTakeClimbAndLeap: boolean = false;
-  time: number = 0;
+  time: number = 6;
   horror: number = 0;
   psychicAttackOptions: PsychicAttack[] = [
     { label: '0', value: 0 },
