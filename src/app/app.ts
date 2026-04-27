@@ -340,7 +340,6 @@ export class App {
   }
 
   nextTerrorCard() {
-    debugger;
     if (this.terrorListIndex < this.terrorList.length) {
       this.terrorListIndex += 1;
     }
