@@ -55,6 +55,7 @@ export class App {
   canTakeClimbAndLeap: boolean = false;
   time: number = 6;
   horror: number = 0;
+  health: number = 0;
   psychicAttackOptions: PsychicAttack[] = [
     { label: '0', value: 0 },
     { label: '1', value: 1 },
@@ -65,25 +66,34 @@ export class App {
 
   ngOnInit() {
     this.killer = [
+      { name: 'Hans', code: 'hans' },
+      { name: 'Gepetto', code: 'gepetto' },
       { name: 'Inkanyamba', code: 'inkanyamba' },
+      { name: 'Birds', code: 'birds' },
+      { name: 'Big Bad Wolf', code: 'bigbadwolf' },
       { name: 'Ratchet Lady', code: 'ratchet' },
-      { name: 'Evomorph', code: 'evomorph' },
+      { name: 'The Intruders', code: 'intruders' },
+      { name: 'Zombies', code: 'zombies' },
+      { name: 'Razorface', code: 'razorface' },
+      { name: 'The Tormentor', code: 'tormentor' },
+      { name: 'Destiny', code: 'destiny' },
+      { name: 'Billy the Bear', code: 'billythebear' },
       { name: 'Berith', code: 'berith' },
-      { name: 'The Organism', code: 'organism' },
-      { name: 'Terror from Destiny', code: 'destiny' },
-      { name: 'Slayer', code: 'slayer' },
-      { name: 'Volkar', code: 'volkar' },
-      { name: 'Mort', code: 'mort' },
-      { name: 'Slayer', code: 'slayer' },
+      { name: 'Grimlash', code: 'grimlash' },
     ];
     this.location = [
-      { name: 'Maple Lane', code: 'maplelane' },
+      { name: 'Happy Camp Trails', code: 'happycamp' },
+      { name: 'Carnival of Blood', code: 'carnival' },
       { name: 'Sacred Groves', code: 'sacredgroves' },
-      { name: 'Station 2891', code: 'station' },
+      { name: 'Storybook Woods', code: 'storybookwoods' },
+      { name: 'Wolfe Asylum', code: 'wolfeasylum' },
+      { name: 'Wingard Cottage', code: 'wingardcottage' },
       { name: 'Hellscape', code: 'hellscape' },
       { name: 'Marrek Wharehouse', code: 'marrek' },
+      { name: 'Buddyland', code: 'buddyland' },
       { name: 'Larmes Abbey', code: 'abbey' },
-      { name: 'Sunnydaze Mall', code: 'sunnydaze' },
+      { name: 'Shade Acres', code: 'shadeacres' },
+      
     ];
     this.girl = [
       { name: 'Carolyn Revenge', code: 'carolyn' },
@@ -102,7 +112,9 @@ export class App {
   endTurn() {
     if (this.selectedGirl && this.selectedGirl.code === 'carolyn') {
       this.discardActions = this.discardActions.filter((action) => action.img !== 'phychicattack');
-      const psychicAttackInPlay = this.playActions.filter((action) => action.img === 'phychicattack');
+      const psychicAttackInPlay = this.playActions.filter(
+        (action) => action.img === 'phychicattack',
+      );
       this.psychicAttackValue = {
         label: psychicAttackInPlay.length.toString(),
         value: psychicAttackInPlay.length,
@@ -123,7 +135,7 @@ export class App {
   }
 
   signatureChange(event: any) {
-    if(event.checked) {
+    if (event.checked) {
       this.addRandomSignatureAction();
     } else {
       this.tableauActions = this.tableauActions.filter((action) => action.category !== 'signature');
@@ -167,11 +179,11 @@ export class App {
     }
 
     if (this.selectedLocation && this.selectedLocation.code === 'marrek') {
-/*       const marrekActions = actionsData.filter((action) => action.category === 'marrek');
+      /*       const marrekActions = actionsData.filter((action) => action.category === 'marrek');
       this.playActions = [...this.playActions, ...marrekActions];
       this.playActions = this.orderListByName(this.playActions); */
 
-      // if 
+      // if
       return;
     }
 
@@ -280,39 +292,42 @@ export class App {
   }
 
   increaseHorror() {
-    if(this.horror < 7) {
+    if (this.horror < 7) {
       this.horror += 1;
     }
   }
 
   decreaseHorror() {
-    if(this.horror > 0) {
+    if (this.horror > 0) {
       this.horror -= 1;
     }
   }
 
   decreaseTime() {
-    if(this.time > 0) {
+    if (this.time > 0) {
       this.time -= 1;
     }
   }
 
   increaseTime() {
-    if(this.time < 12) {
+    if (this.time < 12) {
       this.time += 1;
     }
   }
 
-  takeClimb() {
+  takeClimb() {}
 
+  takeLeap() {}
+
+  takeClimbAndLeap() {}
+
+  decreaseHealth() {
+    if (this.health > 0) {
+      this.health -= 1;
+    }
   }
 
-  takeLeap() {
-
+  increaseHealth() {
+    this.health += 1;
   }
-
-  takeClimbAndLeap() {
-
-  }
-  
 }

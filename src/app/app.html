@@ -59,13 +59,29 @@
           }
         </div>
         <div class="flex items-center">
+          <p-button [text]="true" (click)="decreaseHealth()">
+            <img src="../assets/hpdown.png" alt="HP Icon" class="w-10 h-10 inline-block" />
+          </p-button>
+          <span
+            class="font-bold text-5xl ml-5 mr-5 mb-1"
+            [class.text-red-400]="health === 1"
+            [class.text-white]="health !== 1"
+            >{{ health }}</span
+          >
+          <p-button [text]="true" (click)="increaseHealth()">
+            <img src="../assets/hpup.png" alt="HP Icon" class="w-10 h-10 inline-block" />
+          </p-button>
+        </div>
+        <div class="flex items-center">
           <p-button [text]="true" (click)="decreaseTime()">
             <img src="../assets/timedown.png" alt="HP Icon" class="w-7 h-10 inline-block" />
           </p-button>
-          <span class="font-bold text-5xl ml-5 mr-5"
+          <span
+            class="font-bold text-5xl ml-5 mr-5"
             [class.text-blue-400]="time === 6"
             [class.text-white]="time !== 6"
-          >{{ time }}</span>
+            >{{ time }}</span
+          >
           <p-button [text]="true" (click)="increaseTime()">
             <img src="../assets/timeup.png" alt="HP Icon" class="w-7 h-10 inline-block" />
           </p-button>
@@ -74,11 +90,13 @@
           <p-button [text]="true" (click)="decreaseHorror()">
             <img src="../assets/horrordown.png" alt="HP Icon" class="w-10 h-10 inline-block" />
           </p-button>
-          <span class="font-bold text-5xl ml-5 mr-5"
-            [class.text-green-400]="horror === 0 || horror === 1 || horror === 2"
+          <span
+            class="font-bold text-5xl ml-5 mr-5"
+            [class.text-green-400]="horror === 0 || horror === 1"
             [class.text-red-500]="horror === 7"
-            [class.text-white]="horror !== 0 && horror !== 1 && horror !== 2 && horror !== 7"
-          >{{ horror }}</span>
+            [class.text-white]="horror !== 0 && horror !== 1 && horror !== 7"
+            >{{ horror }}</span
+          >
           <p-button [text]="true" (click)="increaseHorror()">
             <img src="../assets/horrorup.png" alt="HP Icon" class="w-10 h-10 inline-block" />
           </p-button>
