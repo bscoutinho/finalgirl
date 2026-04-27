@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import actionsData from './db.actions.json';
+import terrorData from './db.terror.json';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { PickListModule } from 'primeng/picklist';
@@ -17,6 +18,11 @@ interface Film {
 interface PsychicAttack {
   label: string;
   value: number;
+}
+
+interface TerrorList {
+  code: string;
+  card: string;
 }
 
 @Component({
@@ -48,6 +54,8 @@ export class App {
   location!: Film[];
   selectedLocation: Film | undefined;
   girl!: Film[];
+  terrorList: TerrorList[] = [];
+  terrorListIndex: number = 0;
   selectedGirl: Film | null = null;
   psychicAttackValue: PsychicAttack = { label: '0', value: 0 };
   canTakeClimb: boolean = false;
@@ -61,8 +69,8 @@ export class App {
     { label: '1', value: 1 },
     { label: '2', value: 2 },
   ];
-
   hoveredActionImg: string | null = null;
+  horrorListCreated: boolean = false;
 
   ngOnInit() {
     this.killer = [
@@ -329,5 +337,29 @@ export class App {
 
   increaseHealth() {
     this.health += 1;
+  }
+
+  nextTerrorCard() {
+    debugger;
+    if (this.terrorListIndex < this.terrorList.length) {
+      this.terrorListIndex += 1;
+    }
+  }
+
+  createTerrorList() {
+    if (this.selectedKiller && this.selectedLocation) {
+      const allKillerCards = terrorData.filter(
+        (terror) => terror.code === this.selectedKiller.code,
+      );
+      const allLocationCards = terrorData.filter(
+        (terror) => terror.code === this.selectedLocation?.code,
+      );
+      const combinedList = [...allKillerCards, ...allLocationCards];
+      const randomCards = combinedList.sort(() => 0.5 - Math.random()).slice(0, 10);
+      this.terrorList = randomCards;
+      this.terrorListIndex = 0;
+      this.horrorListCreated = true;
+      console.log('Terror List:', this.terrorList);
+    }
   }
 }

@@ -3,7 +3,7 @@
     <img
       src="../assets/logo.png"
       alt="Final Girl Logo"
-      class="w-48 h-24 object-fit rounded-md mr-8"
+      class="w-36 h-18 object-fit rounded-md mr-8"
     />
     <div>
       <p-togglebutton
@@ -42,12 +42,12 @@
       />
     </div>
   </div>
-  <div class="flex justify-between items-center">
-    <div class="w-[75%]">
+  <div class="flex justify-between">
+    <div class="w-[60%]">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           @if (selectedGirl?.code === 'carolyn') {
-            <span class="font-bold text-lg text-white mr-5">Psychic Attack:</span>
+            <span class="font-bold text-lg text-white mr-5">Psychic ATK:</span>
             <p-selectbutton
               class="psychic-selectbutton"
               [options]="psychicAttackOptions"
@@ -222,13 +222,68 @@
         />
       </div>
     </div>
-    <div class="w-[20%]">
+    <div class="w-[15%]">
       @if (hoveredActionImg) {
         <img
           [src]="hoveredActionImg ? '../assets/' + hoveredActionImg + '.png' : ''"
           alt="Selected Killer"
-          class="w-full h-auto object-cover rounded-md mb-4"
+          class="w-full h-auto object-cover rounded-md mt-20 ml-2"
         />
+      }
+    </div>
+    <div class="w-[25%] flex flex-col ml-5">
+      <div class="flex justify-center items-center">
+        <p-button
+          icon="pi pi-plus"
+          class="mr-2"
+          [rounded]="true"
+          [text]="true"
+          severity="danger"
+          (onClick)="createTerrorList()"
+          [disabled]="!selectedKiller || !selectedLocation || horrorListCreated"
+        />
+        @if (horrorListCreated) {
+          <span class="font-bold text-white text-2xl"
+            >Horror Turn: {{ terrorListIndex }} / {{ terrorList.length }}</span
+          >
+          <p-button
+            icon="pi pi-arrow-right"
+            class="ml-2"
+            [rounded]="true"
+            [text]="true"
+            severity="danger"
+            (onClick)="nextTerrorCard()"
+          />
+        } @else {
+          <span class="font-bold text-white text-2xl">Create Horror List</span>
+        }
+      </div>
+      @if (
+        selectedKiller && selectedKiller.code && selectedLocation?.code && terrorList.length > 0
+      ) {
+        @if (terrorList.length > 0) {
+        <div class="flex justify-center">
+          @if (terrorListIndex === 0) {
+            <img
+              [src]="'../assets/terror/terror.png'"
+              alt="Terror Card"
+              class="w-90 h-auto object-cover rounded-md mt-20 ml-2"
+            />
+          } @else {
+            <img
+              [src]="
+                '../assets/terror/' +
+                terrorList[terrorListIndex -1].code +
+                '/' +
+                terrorList[terrorListIndex -1].card +
+                '.png'
+              "
+              alt="Terror Card"
+              class="w-90 h-auto object-cover rounded-md mt-20 ml-2"
+            />
+          }
+        </div>
+      }
       }
     </div>
   </div>
