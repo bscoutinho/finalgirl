@@ -73,6 +73,10 @@ export class App {
   horrorListCreated: boolean = false;
   minorDarkPowerList: any[] = [];
 
+  ngOnChanges() {
+    this.updateCanTakeClimbAndLeap();
+  }
+
   ngOnInit() {
     this.killer = [
       { name: 'Hans', code: 'hans' },
@@ -102,7 +106,6 @@ export class App {
       { name: 'Buddyland', code: 'buddyland' },
       { name: 'Larmes Abbey', code: 'abbey' },
       { name: 'Shade Acres', code: 'shadeacres' },
-      
     ];
     this.girl = [
       { name: 'Carolyn Revenge', code: 'carolyn' },
@@ -116,6 +119,7 @@ export class App {
     this.playActions = this.orderListByName(
       actionsData.filter((action) => action.category === 'core' && action.cost === 0),
     );
+    this.updateCanTakeClimbAndLeap();
   }
 
   endTurn() {
@@ -129,10 +133,18 @@ export class App {
         value: psychicAttackInPlay.length,
       };
     }
+
+    if (this.selectedLocation && this.selectedLocation.code === 'marrek') {
+      this.discardActions = this.discardActions.filter(
+        (action) => action.img !== 'climb' && action.img !== 'leap',
+      );
+    }
+
     this.tableauActions = [...this.tableauActions, ...this.discardActions];
     this.tableauActions = this.orderListByName(this.tableauActions);
     this.playActions = [...this.playActions, ...this.handActions];
     this.playActions = this.orderListByName(this.playActions);
+    this.updateCanTakeClimbAndLeap();
     this.handActions = [];
     this.discardActions = [];
     this.time = 6;
@@ -188,11 +200,7 @@ export class App {
     }
 
     if (this.selectedLocation && this.selectedLocation.code === 'marrek') {
-      /*       const marrekActions = actionsData.filter((action) => action.category === 'marrek');
-      this.playActions = [...this.playActions, ...marrekActions];
-      this.playActions = this.orderListByName(this.playActions); */
-
-      // if
+      this.updateCanTakeClimbAndLeap();
       return;
     }
 
@@ -222,7 +230,7 @@ export class App {
       );
       this.playActions = [...this.playActions, ...grandmaPlayActions];
       this.playActions = this.orderListByName(this.playActions);
-
+      this.updateCanTakeClimbAndLeap();
       return;
     }
 
@@ -232,6 +240,7 @@ export class App {
       );
       this.tableauActions = [...this.tableauActions, ...carolynTableauActions];
       this.tableauActions = this.orderListByName(this.tableauActions);
+      this.updateCanTakeClimbAndLeap();
       return;
     }
   }
@@ -241,6 +250,7 @@ export class App {
     this.handActions = [...this.handActions, ...freeActions];
     this.handActions = this.orderListByName(this.handActions);
     this.tableauActions = this.tableauActions.filter((action) => action.cost !== 0);
+    this.updateCanTakeClimbAndLeap();
   }
 
   onPlayActionSelect(event: any) {
@@ -278,6 +288,7 @@ export class App {
     if (this.psychicAttackValue.value === 0) {
       this.playActions = this.playActions.filter((action) => action.img !== 'psychicattack');
       this.playActions = this.orderListByName(this.playActions);
+      this.updateCanTakeClimbAndLeap();
       return;
     }
     if (this.psychicAttackValue.value === 1) {
@@ -286,6 +297,7 @@ export class App {
       const psychicAttackAction = actionsData.find((action) => action.id === 62);
       this.playActions = [...this.playActions, psychicAttackAction];
       this.playActions = this.orderListByName(this.playActions);
+      this.updateCanTakeClimbAndLeap();
       return;
     }
     if (this.psychicAttackValue.value === 2) {
@@ -296,6 +308,7 @@ export class App {
       const psychicAttackAction2 = actionsData.find((action) => action.id === 63);
       this.playActions = [...this.playActions, psychicAttackAction2];
       this.playActions = this.orderListByName(this.playActions);
+      this.updateCanTakeClimbAndLeap();
       return;
     }
   }
@@ -324,11 +337,67 @@ export class App {
     }
   }
 
-  takeClimb() {}
+  updateCanTakeClimbAndLeap() {
+    if (this.selectedLocation && this.selectedLocation.code === 'marrek') {
+      this.canTakeClimb = this.playActions?.some((action) => action.img === 'walk') && !this.playActions?.some((action) => action.img === 'climb');
+      this.canTakeLeap = this.playActions?.some((action) => action.img === 'walk') && !this.playActions?.some((action) => action.img === 'leap');
+      this.canTakeClimbAndLeap = this.playActions?.some((action) => action.img === 'sprint') && !this.playActions?.some((action) => action.img === 'leap') && !this.playActions?.some((action) => action.img === 'climb');
+    }
+  }
 
-  takeLeap() {}
+  takeClimb() {
+    // Adiciona a carta climb em playActions e move walk para discardActions
+    if (this.canTakeClimb) {
+      const climbAction = actionsData.find((action) => action.img === 'climb');
+      const walkIndex = this.playActions.findIndex((action) => action.img === 'walk');
+      if (climbAction && walkIndex !== -1) {
+        this.playActions = [...this.playActions, climbAction];
+        // Remove a carta walk de playActions e adiciona em discardActions
+        const [walkAction] = this.playActions.splice(walkIndex, 1);
+        this.discardActions = [...this.discardActions, walkAction];
+        this.playActions = this.orderListByName(this.playActions);
+        this.discardActions = this.orderListByName(this.discardActions);
+        this.updateCanTakeClimbAndLeap();
+      }
+    }
+  }
 
-  takeClimbAndLeap() {}
+  takeLeap() {
+    // Adiciona a carta leap em playActions e move walk para discardActions
+    if (this.canTakeLeap) {
+      const leapAction = actionsData.find((action) => action.img === 'leap');
+      const walkIndex = this.playActions.findIndex((action) => action.img === 'walk');
+      if (leapAction && walkIndex !== -1) {
+        this.playActions = [...this.playActions, leapAction];
+        // Remove a carta walk de playActions e adiciona em discardActions
+        const [walkAction] = this.playActions.splice(walkIndex, 1);
+        this.discardActions = [...this.discardActions, walkAction];
+        this.playActions = this.orderListByName(this.playActions);
+        this.discardActions = this.orderListByName(this.discardActions);
+        this.updateCanTakeClimbAndLeap();
+      }
+    }
+  }
+
+  takeClimbAndLeap() {
+    // Adiciona a carta climb e leap em playActions e move walk para discardActions
+    if (this.canTakeClimbAndLeap) {
+      const climbAction = actionsData.find((action) => action.img === 'climb');
+      const leapAction = actionsData.find((action) => action.img === 'leap');
+      const walkIndex = this.playActions.findIndex((action) => action.img === 'walk');
+      const sprintIndex = this.playActions.findIndex((action) => action.img === 'sprint');
+      if (climbAction && leapAction && walkIndex !== -1 && sprintIndex !== -1) {
+        this.playActions = [...this.playActions, climbAction, leapAction];
+        // Remove a carta walk de playActions e adiciona em discardActions
+        const [walkAction] = this.playActions.splice(walkIndex, 1);
+        const [sprintAction] = this.playActions.splice(sprintIndex, 1);
+        this.discardActions = [...this.discardActions, walkAction, sprintAction];
+        this.playActions = this.orderListByName(this.playActions);
+        this.discardActions = this.orderListByName(this.discardActions);
+        this.updateCanTakeClimbAndLeap();
+      }
+    }
+  }
 
   decreaseHealth() {
     if (this.health > 0) {

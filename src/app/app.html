@@ -57,7 +57,9 @@
       </div>
       <div class="card mt-2">
         <p-picklist [source]="playActions" [target]="discardActions" [dragdrop]="true" [responsive]="true"
-          (onSourceSelect)="onPlayActionSelect($event)" sourceFilterPlaceholder="Search by name"
+          (onSourceSelect)="onPlayActionSelect($event)" (onMoveToTarget)="updateCanTakeClimbAndLeap()"
+          (onMoveToSource)="updateCanTakeClimbAndLeap()" (onMoveAllToSource)="updateCanTakeClimbAndLeap()"
+          (onMoveAllToTarget)="updateCanTakeClimbAndLeap()" sourceFilterPlaceholder="Search by name"
           targetFilterPlaceholder="Search by name" showSourceControls="false" showTargetControls="false"
           breakpoint="1400px" scrollHeight="20rem">
           <ng-template pTemplate="sourceHeader">
@@ -132,19 +134,19 @@
         <span class="font-bold text-white text-2xl">Create Horror List</span>
         }
       </div>
-      
+
       @if (
       selectedKiller && selectedKiller.code && selectedLocation?.code && terrorList.length > 0
       ) {
       @if (terrorList.length > 0) {
-        <div class="flex justify-center">
-          <p-button icon="pi pi-caret-down" class="ml-2" [rounded]="true" [text]="true" severity="danger"
-            (onClick)="addMinorDarkPower()" />
-            <p-button icon="pi pi-info-circle" class="ml-2" [rounded]="true" [text]="true" severity="danger"
-            (onClick)="seeTerrorCardLog()" />
-        </div>
       <div class="flex justify-center">
-        
+        <p-button icon="pi pi-caret-down" class="ml-2" [rounded]="true" [text]="true" severity="danger"
+          (onClick)="addMinorDarkPower()" />
+        <p-button icon="pi pi-info-circle" class="ml-2" [rounded]="true" [text]="true" severity="danger"
+          (onClick)="seeTerrorCardLog()" />
+      </div>
+      <div class="flex justify-center">
+
         @if (terrorListIndex === 0) {
         <img [src]="'../assets/terror/terror.png'" alt="Terror Card"
           class="w-90 h-auto object-cover rounded-md mt-2 ml-2" />
@@ -162,9 +164,8 @@
       <div class="grid grid-cols-2">
         @for (minor of minorDarkPowerList; track minor) {
         <div class="flex flex-col items-center">
-          <img [src]="'../assets/terror/' + minor.code + '/' + minor.card + '.png'"
-               alt="Minor Dark Power Card"
-               class="w-90 h-auto object-cover rounded-md mt-2" />
+          <img [src]="'../assets/terror/' + minor.code + '/' + minor.card + '.png'" alt="Minor Dark Power Card"
+            class="w-90 h-auto object-cover rounded-md mt-2" />
           <p-button icon="pi pi-trash" class="ml-2" [rounded]="true" [text]="true" severity="danger"
             (onClick)="removeMinorDarkPower(minor)" />
         </div>
