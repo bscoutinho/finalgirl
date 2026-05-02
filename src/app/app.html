@@ -1,45 +1,16 @@
 <div class="content-panel pt-5 px-10 bg-gray-800 min-h-screen">
   <div id="header" class="flex items-center">
-    <img
-      src="../assets/logo.png"
-      alt="Final Girl Logo"
-      class="w-36 h-18 object-fit rounded-md mr-8"
-    />
+    <img src="../assets/logo.png" alt="Final Girl Logo" class="w-36 h-18 object-fit rounded-md mr-8" />
     <div>
-      <p-togglebutton
-        [(ngModel)]="isSignature"
-        onIcon="pi pi-check"
-        onLabel="Signature"
-        offIcon="pi pi-times"
-        offLabel="Signature"
-        [class.toggle-on]="isSignature"
-        [class.toggle-off]="!isSignature"
-        (onChange)="signatureChange($event)"
-      />
-      <p-select
-        [options]="killer"
-        [(ngModel)]="selectedKiller"
-        optionLabel="name"
-        placeholder="Select a Killer"
-        class="ml-5 w-full md:w-56"
-        (onChange)="changeKiller()"
-      />
-      <p-select
-        [options]="location"
-        [(ngModel)]="selectedLocation"
-        optionLabel="name"
-        placeholder="Select a Location"
-        class="ml-5 w-full md:w-56"
-        (onChange)="changeLocation()"
-      />
-      <p-select
-        [options]="girl"
-        [(ngModel)]="selectedGirl"
-        optionLabel="name"
-        placeholder="Select a Girl"
-        class="ml-5 w-full md:w-56"
-        (onChange)="changeGirl()"
-      />
+      <p-togglebutton [(ngModel)]="isSignature" onIcon="pi pi-check" onLabel="Signature" offIcon="pi pi-times"
+        offLabel="Signature" [class.toggle-on]="isSignature" [class.toggle-off]="!isSignature"
+        (onChange)="signatureChange($event)" />
+      <p-select [options]="killer" [(ngModel)]="selectedKiller" optionLabel="name" placeholder="Select a Killer"
+        class="ml-5 w-full md:w-56" (onChange)="changeKiller()" />
+      <p-select [options]="location" [(ngModel)]="selectedLocation" optionLabel="name" placeholder="Select a Location"
+        class="ml-5 w-full md:w-56" (onChange)="changeLocation()" />
+      <p-select [options]="girl" [(ngModel)]="selectedGirl" optionLabel="name" placeholder="Select a Girl"
+        class="ml-5 w-full md:w-56" (onChange)="changeGirl()" />
     </div>
   </div>
   <div class="flex justify-between">
@@ -47,27 +18,17 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           @if (selectedGirl?.code === 'carolyn') {
-            <span class="font-bold text-lg text-white mr-5">Psychic ATK:</span>
-            <p-selectbutton
-              class="psychic-selectbutton"
-              [options]="psychicAttackOptions"
-              [(ngModel)]="psychicAttackValue"
-              size="small"
-              (onChange)="onChangeCarolynAttack()"
-              optionLabel="label"
-            ></p-selectbutton>
+          <span class="font-bold text-lg text-white mr-5">Psychic ATK:</span>
+          <p-selectbutton class="psychic-selectbutton" [options]="psychicAttackOptions" [(ngModel)]="psychicAttackValue"
+            size="small" (onChange)="onChangeCarolynAttack()" optionLabel="label"></p-selectbutton>
           }
         </div>
         <div class="flex items-center">
           <p-button [text]="true" (click)="decreaseHealth()">
             <img src="../assets/hpdown.png" alt="HP Icon" class="w-10 h-10 inline-block" />
           </p-button>
-          <span
-            class="font-bold text-5xl ml-5 mr-5 mb-1"
-            [class.text-red-400]="health === 1"
-            [class.text-white]="health !== 1"
-            >{{ health }}</span
-          >
+          <span class="font-bold text-5xl ml-5 mr-5 mb-1" [class.text-red-400]="health === 1"
+            [class.text-white]="health !== 1">{{ health }}</span>
           <p-button [text]="true" (click)="increaseHealth()">
             <img src="../assets/hpup.png" alt="HP Icon" class="w-10 h-10 inline-block" />
           </p-button>
@@ -76,12 +37,8 @@
           <p-button [text]="true" (click)="decreaseTime()">
             <img src="../assets/timedown.png" alt="HP Icon" class="w-7 h-10 inline-block" />
           </p-button>
-          <span
-            class="font-bold text-5xl ml-5 mr-5"
-            [class.text-blue-400]="time === 6"
-            [class.text-white]="time !== 6"
-            >{{ time }}</span
-          >
+          <span class="font-bold text-5xl ml-5 mr-5" [class.text-blue-400]="time === 6"
+            [class.text-white]="time !== 6">{{ time }}</span>
           <p-button [text]="true" (click)="increaseTime()">
             <img src="../assets/timeup.png" alt="HP Icon" class="w-7 h-10 inline-block" />
           </p-button>
@@ -90,75 +47,44 @@
           <p-button [text]="true" (click)="decreaseHorror()">
             <img src="../assets/horrordown.png" alt="HP Icon" class="w-10 h-10 inline-block" />
           </p-button>
-          <span
-            class="font-bold text-5xl ml-5 mr-5"
-            [class.text-green-400]="horror === 0 || horror === 1"
-            [class.text-red-500]="horror === 7"
-            [class.text-white]="horror !== 0 && horror !== 1 && horror !== 7"
-            >{{ horror }}</span
-          >
+          <span class="font-bold text-5xl ml-5 mr-5" [class.text-green-400]="horror === 0 || horror === 1"
+            [class.text-red-500]="horror === 7" [class.text-white]="horror !== 0 && horror !== 1 && horror !== 7">{{
+            horror }}</span>
           <p-button [text]="true" (click)="increaseHorror()">
             <img src="../assets/horrorup.png" alt="HP Icon" class="w-10 h-10 inline-block" />
           </p-button>
         </div>
       </div>
       <div class="card mt-2">
-        <p-picklist
-          [source]="playActions"
-          [target]="discardActions"
-          [dragdrop]="true"
-          [responsive]="true"
-          (onSourceSelect)="onPlayActionSelect($event)"
-          sourceFilterPlaceholder="Search by name"
-          targetFilterPlaceholder="Search by name"
-          showSourceControls="false"
-          showTargetControls="false"
-          breakpoint="1400px"
-          scrollHeight="20rem"
-        >
+        <p-picklist [source]="playActions" [target]="discardActions" [dragdrop]="true" [responsive]="true"
+          (onSourceSelect)="onPlayActionSelect($event)" sourceFilterPlaceholder="Search by name"
+          targetFilterPlaceholder="Search by name" showSourceControls="false" showTargetControls="false"
+          breakpoint="1400px" scrollHeight="20rem">
           <ng-template pTemplate="sourceHeader">
             <div class="font-bold text-center text-red-600 text-xl py-2">
               Play Actions
-              <span class="font-bold text-lg text-white mr-10"
-                >- Total: {{ playActions.length }}</span
-              >
+              <span class="font-bold text-lg text-white mr-10">- Total: {{ playActions.length }}</span>
             </div>
           </ng-template>
           <ng-template pTemplate="targetHeader">
             <div class="font-bold text-center text-red-600 text-xl py-2">Discard</div>
           </ng-template>
           <ng-template let-action let-selected="selected" #item>
-            <div
-              class="flex justify-between w-full items-center cursor-pointer"
-              (mouseenter)="onActionMouseEnter(action)"
-              (mouseleave)="onActionMouseLeave()"
-            >
+            <div class="flex justify-between w-full items-center cursor-pointer"
+              (mouseenter)="onActionMouseEnter(action)" (mouseleave)="onActionMouseLeave()">
               <span class="font-bold text-lg mr-2">{{ action.name }}</span>
-              <span class="font-bold text-lg sm:ml-8"
-                ><i class="pi pi-hourglass mr-1"></i>{{ action.cost }}</span
-              >
+              <span class="font-bold text-lg sm:ml-8"><i class="pi pi-hourglass mr-1"></i>{{ action.cost }}</span>
             </div>
           </ng-template>
         </p-picklist>
       </div>
       <div class="card mt-5">
-        <p-picklist
-          [source]="tableauActions"
-          [target]="handActions"
-          [dragdrop]="time > 0"
-          [responsive]="true"
-          (onSourceSelect)="onTableauActionSelect($event)"
-          (onMoveToTarget)="onMoveTableauToHand($event)"
-          (onMoveAllToTarget)="onMoveTableauToHand($event)"
-          (onMoveToSource)="onMoveHandToTableau($event)"
-          (onMoveAllToSource)="onMoveHandToTableau($event)"
-          sourceFilterPlaceholder="Search by name"
-          targetFilterPlaceholder="Search by name"
-          showSourceControls="false"
-          showTargetControls="false"
-          breakpoint="1400px"
-          scrollHeight="20rem"
-        >
+        <p-picklist [source]="tableauActions" [target]="handActions" [dragdrop]="time > 0" [responsive]="true"
+          (onSourceSelect)="onTableauActionSelect($event)" (onMoveToTarget)="onMoveTableauToHand($event)"
+          (onMoveAllToTarget)="onMoveTableauToHand($event)" (onMoveToSource)="onMoveHandToTableau($event)"
+          (onMoveAllToSource)="onMoveHandToTableau($event)" sourceFilterPlaceholder="Search by name"
+          targetFilterPlaceholder="Search by name" showSourceControls="false" showTargetControls="false"
+          breakpoint="1400px" scrollHeight="20rem">
           <ng-template pTemplate="sourceHeader">
             <div class="font-bold text-center text-red-600 text-xl py-2">Tableau</div>
           </ng-template>
@@ -166,123 +92,84 @@
             <div class="font-bold text-center text-red-600 text-xl py-2">Hand</div>
           </ng-template>
           <ng-template let-action let-selected2="selected2" #item>
-            <div
-              class="flex justify-between w-full items-center cursor-pointer"
-              (mouseenter)="onActionMouseEnter(action)"
-              (mouseleave)="onActionMouseLeave()"
-            >
+            <div class="flex justify-between w-full items-center cursor-pointer"
+              (mouseenter)="onActionMouseEnter(action)" (mouseleave)="onActionMouseLeave()">
               <span class="font-bold text-xl mr-2">{{ action.name }}</span>
-              <span class="font-bold text-xl sm:ml-8"
-                ><i class="pi pi-hourglass mr-1"></i>{{ action.cost }}</span
-              >
+              <span class="font-bold text-xl sm:ml-8"><i class="pi pi-hourglass mr-1"></i>{{ action.cost }}</span>
             </div>
           </ng-template>
         </p-picklist>
       </div>
       <div class="flex justify-end">
         @if (selectedLocation && selectedLocation.code === 'marrek') {
-          <p-button
-            label="Take Climb"
-            (onClick)="takeClimb()"
-            [disabled]="!canTakeClimb"
-            [rounded]="true"
-            severity="warn"
-            class="mt-5 mx-2"
-          />
-          <p-button
-            label="Take Leap"
-            (onClick)="takeLeap()"
-            [disabled]="!canTakeLeap"
-            [rounded]="true"
-            severity="warn"
-            class="mt-5 mx-2"
-          />
-          <p-button
-            label="Take Climb and Leap"
-            (onClick)="takeClimbAndLeap()"
-            [disabled]="!canTakeClimbAndLeap"
-            [rounded]="true"
-            severity="warn"
-            class="mt-5 mx-2"
-          />
+        <p-button label="Take Climb" (onClick)="takeClimb()" [disabled]="!canTakeClimb" [rounded]="true" severity="warn"
+          class="mt-5 mx-2" />
+        <p-button label="Take Leap" (onClick)="takeLeap()" [disabled]="!canTakeLeap" [rounded]="true" severity="warn"
+          class="mt-5 mx-2" />
+        <p-button label="Take Climb and Leap" (onClick)="takeClimbAndLeap()" [disabled]="!canTakeClimbAndLeap"
+          [rounded]="true" severity="warn" class="mt-5 mx-2" />
         }
-        <p-button
-          label="Take All Free Cards"
-          (onClick)="takeFreeCards()"
-          class="m-5"
-          [rounded]="true"
-          severity="info"
-        />
-        <p-button
-          label="End Turn"
-          (onClick)="endTurn()"
-          class="m-5"
-          [rounded]="true"
-          severity="danger"
-        />
+        <p-button label="Take All Free Cards" (onClick)="takeFreeCards()" class="m-5" [rounded]="true"
+          severity="info" />
+        <p-button label="End Turn" (onClick)="endTurn()" class="m-5" [rounded]="true" severity="danger" />
       </div>
     </div>
     <div class="w-[20%]">
       @if (hoveredActionImg) {
-        <img
-          [src]="hoveredActionImg ? '../assets/' + hoveredActionImg + '.png' : ''"
-          alt="Selected Killer"
-          class="w-full h-auto object-cover rounded-md mt-30 ml-2"
-        />
+      <img [src]="hoveredActionImg ? '../assets/' + hoveredActionImg + '.png' : ''" alt="Selected Killer"
+        class="w-full h-auto object-cover rounded-md mt-30 ml-2" />
       }
     </div>
     <div class="w-[20%] flex flex-col ml-5">
-      <div class="flex justify-center items-center">
-        <p-button
-          icon="pi pi-plus"
-          class="mr-2"
-          [rounded]="true"
-          [text]="true"
-          severity="danger"
-          (onClick)="createTerrorList()"
-          [disabled]="!selectedKiller || !selectedLocation || horrorListCreated"
-        />
+      <div class="flex justify-start items-center">
+        <p-button icon="pi pi-plus-circle" class="mr-2" [rounded]="true" [text]="true" severity="danger"
+          (onClick)="createTerrorList()" [disabled]="!selectedKiller || !selectedLocation || horrorListCreated" />
         @if (horrorListCreated) {
-          <span class="font-bold text-white text-2xl"
-            >Horror Turn: {{ terrorListIndex }} / {{ terrorList.length }}</span
-          >
-          <p-button
-            icon="pi pi-arrow-right"
-            class="ml-2"
-            [rounded]="true"
-            [text]="true"
-            severity="danger"
-            (onClick)="nextTerrorCard()"
-          />
+        <span class="font-bold text-white text-2xl">Horror Turn: {{ terrorListIndex }} / {{ terrorList.length }}</span>
+        <p-button icon="pi pi-arrow-right" class="ml-2" [rounded]="true" [text]="true" severity="danger"
+          (onClick)="nextTerrorCard()" />
         } @else {
-          <span class="font-bold text-white text-2xl">Create Horror List</span>
+        <span class="font-bold text-white text-2xl">Create Horror List</span>
         }
       </div>
+      
       @if (
-        selectedKiller && selectedKiller.code && selectedLocation?.code && terrorList.length > 0
+      selectedKiller && selectedKiller.code && selectedLocation?.code && terrorList.length > 0
       ) {
-        @if (terrorList.length > 0) {
+      @if (terrorList.length > 0) {
         <div class="flex justify-center">
-          @if (terrorListIndex === 0) {
-            <img
-              [src]="'../assets/terror/terror.png'"
-              alt="Terror Card"
-              class="w-90 h-auto object-cover rounded-md mt-20 ml-2"
-            />
-          } @else {
-            <img
-              [src]="
+          <p-button icon="pi pi-caret-down" class="ml-2" [rounded]="true" [text]="true" severity="danger"
+            (onClick)="addMinorDarkPower()" />
+            <p-button icon="pi pi-info-circle" class="ml-2" [rounded]="true" [text]="true" severity="danger"
+            (onClick)="seeTerrorCardLog()" />
+        </div>
+      <div class="flex justify-center">
+        
+        @if (terrorListIndex === 0) {
+        <img [src]="'../assets/terror/terror.png'" alt="Terror Card"
+          class="w-90 h-auto object-cover rounded-md mt-2 ml-2" />
+
+        } @else {
+        <img [src]="
                 '../assets/terror/' +
                 terrorList[terrorListIndex -1].code +
                 '/' +
                 terrorList[terrorListIndex -1].card +
                 '.png'
-              "
-              alt="Terror Card"
-              class="w-90 h-auto object-cover rounded-md mt-20 ml-2"
-            />
-          }
+              " alt="Terror Card" class="w-90 h-auto object-cover rounded-md mt-2 ml-2" />
+        }
+      </div>
+      <div class="grid grid-cols-2">
+        @for (minor of minorDarkPowerList; track minor) {
+        <div class="flex flex-col items-center">
+          <img [src]="'../assets/terror/' + minor.code + '/' + minor.card + '.png'"
+               alt="Minor Dark Power Card"
+               class="w-90 h-auto object-cover rounded-md mt-2" />
+          <p-button icon="pi pi-trash" class="ml-2" [rounded]="true" [text]="true" severity="danger"
+            (onClick)="removeMinorDarkPower(minor)" />
         </div>
+        }
+      </div>
       }
       }
     </div>

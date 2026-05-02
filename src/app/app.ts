@@ -71,6 +71,7 @@ export class App {
   ];
   hoveredActionImg: string | null = null;
   horrorListCreated: boolean = false;
+  minorDarkPowerList: any[] = [];
 
   ngOnInit() {
     this.killer = [
@@ -360,5 +361,22 @@ export class App {
       this.horrorListCreated = true;
       console.log('Terror List:', this.terrorList);
     }
+  }
+
+  seeTerrorCardLog() {
+    console.log('Terror List:', this.terrorList);
+  }
+
+  addMinorDarkPower() {
+    if (this.terrorListIndex > 0 && this.terrorListIndex <= this.terrorList.length) {
+      const currentTerrorCard = this.terrorList[this.terrorListIndex - 1];
+      this.minorDarkPowerList.push(currentTerrorCard);
+      console.log('Minor Dark Power List:', this.minorDarkPowerList);
+    }
+  }
+
+  removeMinorDarkPower(card: any) {
+    this.minorDarkPowerList = this.minorDarkPowerList.filter((c) => c !== card);
+    console.log('Minor Dark Power List:', this.minorDarkPowerList);
   }
 }
