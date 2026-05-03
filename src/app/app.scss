@@ -5,7 +5,9 @@
     color: #dc2626 !important; /* red for OFF */
 }
 .content-panel {
-    background-color: rgb(25, 25, 25) !important;
+    background: url("../assets/background.jpg") no-repeat center center;
+    background-size: cover;
+    background-color: rgb(30, 30, 30) !important;
 }
 
 .tpimage {
